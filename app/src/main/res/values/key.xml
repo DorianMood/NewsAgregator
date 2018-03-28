@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="API_KEY" type="string">0d5bac486d414684a532ea0ae31ef856</item>
+    <item name="URI" type="string">https://newsapi.org/v2/top-headlines?country=us&amp;apiKey=%s</item>
+</resources>
