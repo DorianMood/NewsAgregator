@@ -24,9 +24,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by nikita on 22.03.2018.
- */
 
 public class FragNews extends Fragment {
 
@@ -41,8 +38,7 @@ public class FragNews extends Fragment {
     }
 
     public static FragNews newInstance() {
-        FragNews fragment = new FragNews();
-        return fragment;
+        return new FragNews();
     }
 
     public static FragNews getInstance() {

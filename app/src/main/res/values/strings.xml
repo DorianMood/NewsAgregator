@@ -3,4 +3,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Favorites</string>
+
+    <string name="share">SHARE</string>
+    <string name="more">MORE</string>
+    <string name="favorite">FAVORITE</string>
 </resources>
