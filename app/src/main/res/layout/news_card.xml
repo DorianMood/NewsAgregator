@@ -28,31 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right">
-            <TextView
-                android:id="@+id/more"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/more"
-                android:layout_margin="@dimen/card_button_margin"
-                android:textStyle="bold"
-                android:textColor="@color/colorSecondaryText"
-                />
-            <TextView
-                android:id="@+id/share"
+                android:src="@drawable/ic_more_black_24dp"
+                android:layout_margin="@dimen/default_margin"
+                android:id="@+id/more" />
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/share"
-                android:layout_margin="@dimen/card_button_margin"
-                android:textColor="@color/colorSecondaryText"
-                />
-            <TextView
-                android:id="@+id/favorite"
+                android:src="@drawable/ic_reply_black_24dp"
+                android:layout_margin="@dimen/default_margin"
+                android:id="@+id/share" />
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/favorite"
-                android:layout_margin="10dp"
-                android:textColor="@color/colorAccent"
-                />
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                android:layout_margin="@dimen/default_margin"
+                android:id="@+id/favorite" />
         </LinearLayout>
 
     </LinearLayout>
