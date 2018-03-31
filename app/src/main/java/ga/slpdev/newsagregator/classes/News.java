@@ -1,8 +1,5 @@
 package ga.slpdev.newsagregator.classes;
 
-/**
- * Created by nikita on 22.03.2018.
- */
 
 public class News {
     private String sourceId;

@@ -9,10 +9,8 @@ import java.util.ArrayList;
 
 import ga.slpdev.newsagregator.classes.News;
 
-/**
- * Created by nikita on 22.03.2018.
- */
 
+@SuppressWarnings("DefaultFileTemplate")
 public class JSONParser {
     public static ArrayList<News> parseNews(String json) {
         ArrayList<News> list = new ArrayList<>();

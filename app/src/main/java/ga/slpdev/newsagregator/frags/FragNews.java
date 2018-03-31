@@ -22,13 +22,12 @@ import ga.slpdev.newsagregator.classes.News;
 import ga.slpdev.newsagregator.utils.JSONParser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 
 public class FragNews extends Fragment {
 
-    public static FragNews instance;
-    View rootView;
+    private static FragNews instance;
+    private View rootView;
     RecyclerView recyclerView;
     NewsAdapter newsAdapter;
     SwipeRefreshLayout swipeRefreshLayout;

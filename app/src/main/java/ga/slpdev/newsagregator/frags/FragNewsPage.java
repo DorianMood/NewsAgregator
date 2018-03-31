@@ -1,22 +1,18 @@
 package ga.slpdev.newsagregator.frags;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
 
 import ga.slpdev.newsagregator.R;
-import ga.slpdev.newsagregator.adapters.NewsAdapter;
 
 
 public class FragNewsPage extends Fragment {
