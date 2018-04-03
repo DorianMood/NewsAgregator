@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     return true;
                 case R.id.navigation_favorites:
+                    getFragFavorites();
                     return true;
             }
             return false;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.content, FragNews.getInstance());
         ft.commit();
+    }
+    private void getFragFavorites() {
+
     }
 
 }
