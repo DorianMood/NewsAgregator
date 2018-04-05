@@ -1,10 +1,8 @@
 package ga.slpdev.newsagregator.adapters;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,18 +17,21 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import ga.slpdev.newsagregator.R;
+import ga.slpdev.newsagregator.activities.NewsItemActivity;
 import ga.slpdev.newsagregator.classes.News;
-import ga.slpdev.newsagregator.frags.FragNewsPage;
+import ga.slpdev.newsagregator.utils.Crypto;
+import ga.slpdev.newsagregator.utils.FavoritesDbHelper;
 
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context context;
     private ArrayList<News> list;
+    private static boolean[] liked;
+    private static FavoritesDbHelper helper;
 
-    public NewsAdapter(Context context, ArrayList<News> list) {
-        this.context = context;
+    public NewsAdapter(ArrayList<News> list) {
         this.list = list;
+        liked = new boolean[list.size()];
     }
 
     public static class NewsHolder extends RecyclerView.ViewHolder {
@@ -39,13 +40,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private final ImageView more, share, favorite;
         private final ArrayList<News> newsObject;
 
-        public NewsHolder(View itemView, final Context context, ArrayList<News> __newsObject) {
+        private final Context context;
+
+        public NewsHolder(View itemView, ArrayList<News> __newsObject) {
             super(itemView);
+            context = itemView.getContext();
+
             articlePreview = itemView.findViewById(R.id.text_preview);
             picture = itemView.findViewById(R.id.image_preview);
             newsObject = __newsObject;
-
-            Log.d("NewsAdapter", "" + getAdapterPosition());
 
             more = itemView.findViewById(R.id.more);
             share = itemView.findViewById(R.id.share);
@@ -57,22 +60,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View view) {
                     try {
                         Toast.makeText(context, "" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
                         Bundle b = new Bundle();
 
                         b.putString("urlImage", newsObject.get(getAdapterPosition()).getUrlImage());
                         b.putString("url", newsObject.get(getAdapterPosition()).getUrl());
-                        b.putString("text", newsObject.get(getAdapterPosition()).getDescription());
+                        b.putString("description", newsObject.get(getAdapterPosition()).getDescription());
 
-                        FragmentManager fm = ((AppCompatActivity) context).getSupportFragmentManager();
-                        FragmentTransaction ft = fm.beginTransaction();
-
-                        FragNewsPage fragment = new FragNewsPage();
-                        fragment.setArguments(b);
-
-                        ft.replace(R.id.content, fragment);
-                        ft.addToBackStack(null);
-                        ft.commit();
-                    } catch(Exception e) {
+                        Intent intent = new Intent(context, NewsItemActivity.class);
+                        intent.putExtra("bundle", b);
+                        context.startActivity(intent);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -84,19 +82,18 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     try {
-                        switch ((int) (favorite.getTag() == null ? 0 : favorite.getTag())) {
-                            case R.drawable.ic_favorite_black_24dp:
-                                favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                                favorite.setTag(R.drawable.ic_favorite_border_black_24dp);
-                                break;
-                            case R.drawable.ic_favorite_border_black_24dp:
-                                favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-                                favorite.setTag(R.drawable.ic_favorite_black_24dp);
-                                break;
-                            default:
-                                favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
-                                favorite.setTag(R.drawable.ic_favorite_black_24dp);
-                                break;
+                        String hash = Crypto.Sha1(newsObject.get(getAdapterPosition()).getDescription());
+
+                        if (helper.isLiked(hash)) {
+                            helper.onDislike(hash);
+                            helper.onDeleteNews(hash);
+                            favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                            liked[getAdapterPosition()] = false;
+                        } else {
+                            helper.onLike(hash);
+                            helper.onAddNews(newsObject.get(getAdapterPosition()));
+                            favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                            liked[getAdapterPosition()] = true;
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -105,20 +102,30 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
             // END: on favorite click
         }
+
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (helper == null) {
+            helper = new FavoritesDbHelper(parent.getContext());
+        }
+        Log.d("News", helper.getAllNews().size() + "");
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.news_card, parent, false);
-        return new NewsHolder(v, context, list);
+        return new NewsHolder(v, list);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final News object = list.get(position);
         ((NewsHolder) holder).articlePreview.setText(object.getDescription());
-        Glide.with(context).load(object.getUrlImage()).thumbnail(0.5f).into(((NewsHolder) holder).picture);
+        if (liked[position]) {
+            ((NewsHolder) holder).favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+        } else {
+            ((NewsHolder) holder).favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        }
+        Glide.with(((NewsHolder) holder).context).load(object.getUrlImage()).thumbnail(0.5f).into(((NewsHolder) holder).picture);
     }
 
     @Override

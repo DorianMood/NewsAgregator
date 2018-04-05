@@ -31,6 +31,7 @@ public class FragNewsPage extends Fragment {
             text = bundle.getString("text");
             Log.d("FragNewsPage", text);
         }
+
         Log.d("FragNewsPage", "Constructor");
     }
 

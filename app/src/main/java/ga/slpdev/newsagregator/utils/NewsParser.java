@@ -1,15 +1,21 @@
 package ga.slpdev.newsagregator.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import ga.slpdev.newsagregator.classes.News;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class NewsParser {
     private static final String RBC = "https://www.rbc.ru/";
@@ -69,6 +75,42 @@ public class NewsParser {
             list.add(item);
         }
 
+        return list;
+    }
+    public static ArrayList<News> parseNewsAPI() throws IOException {
+        String url = String.format("https://newsapi.org/v2/top-headlines?country=ru&amp;apiKey=%s",
+                "0d5bac486d414684a532ea0ae31ef856");
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        // Read response here
+        String json = client.newCall(request).execute().body().string();
+
+        ArrayList<News> list = new ArrayList<>();
+        try {
+            JSONObject wholeObject = new JSONObject(json);
+            JSONArray articles = wholeObject.getJSONArray("articles");
+            for (int i = 0; i < articles.length(); i++) {
+                JSONObject news = articles.getJSONObject(i);
+
+                list.add(new News(
+                        news.getJSONObject("source").getString("id"),
+                        news.getJSONObject("source").getString("name"),
+                        news.getString("author"),
+                        news.getString("title"),
+                        news.getString("description"),
+                        news.getString("url"),
+                        news.getString("urlToImage"),
+                        news.getString("publishedAt")
+                ));
+                Log.d("MY", list.get(i).getSourceName() + " " + i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 }

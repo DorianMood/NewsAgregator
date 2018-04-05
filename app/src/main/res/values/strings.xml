@@ -7,4 +7,5 @@
     <string name="share">SHARE</string>
     <string name="more">MORE</string>
     <string name="favorite">FAVORITE</string>
+    <string name="title_activity_news_item">ActivityNewsItem</string>
 </resources>
