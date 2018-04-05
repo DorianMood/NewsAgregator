@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import ga.slpdev.newsagregator.R;
+import ga.slpdev.newsagregator.frags.FragFavorites;
 import ga.slpdev.newsagregator.frags.FragNews;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
     }
     private void getFragFavorites() {
-        Intent intent = new Intent(this, NewsItemActivity.class);
-        startActivity(intent);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.content, FragFavorites.getInstance());
+        ft.commit();
     }
 
 }

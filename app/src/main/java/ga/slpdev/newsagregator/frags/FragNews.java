@@ -1,7 +1,6 @@
 package ga.slpdev.newsagregator.frags;
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,24 +10,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ga.slpdev.newsagregator.R;
-import ga.slpdev.newsagregator.activities.NewsItemActivity;
 import ga.slpdev.newsagregator.adapters.NewsAdapter;
 import ga.slpdev.newsagregator.classes.News;
-import ga.slpdev.newsagregator.utils.FavoritesDbHelper;
-import ga.slpdev.newsagregator.utils.JSONParser;
 import ga.slpdev.newsagregator.utils.NewsParser;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 
 public class FragNews extends Fragment {
@@ -40,7 +31,6 @@ public class FragNews extends Fragment {
     RecyclerView recyclerView;
     NewsAdapter newsAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
-    FavoritesDbHelper helper;
 
     public FragNews() {
     }
@@ -86,7 +76,7 @@ public class FragNews extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private class LoadData extends AsyncTask<Void, Void, ArrayList<News>> {
+    class LoadData extends AsyncTask<Void, Void, ArrayList<News>> {
         private Source source;
         public LoadData(Source source) {
             super();
@@ -94,6 +84,7 @@ public class FragNews extends Fragment {
         }
         @Override
         protected ArrayList<News> doInBackground(Void... voids) {
+            swipeRefreshLayout.setRefreshing(true);
             ArrayList<News> newsList = new ArrayList<>();
             try {
                 switch (source) {

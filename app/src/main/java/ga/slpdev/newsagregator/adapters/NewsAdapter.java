@@ -120,7 +120,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final News object = list.get(position);
         ((NewsHolder) holder).articlePreview.setText(object.getDescription());
-        if (liked[position]) {
+        if (helper.isLiked(Crypto.Sha1(object.getDescription()))) {//liked[position]) {
             ((NewsHolder) holder).favorite.setImageResource(R.drawable.ic_favorite_black_24dp);
         } else {
             ((NewsHolder) holder).favorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
