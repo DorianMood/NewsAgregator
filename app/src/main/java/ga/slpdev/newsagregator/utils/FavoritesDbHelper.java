@@ -51,7 +51,7 @@ public class FavoritesDbHelper extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_TITLE = "title";
     }
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "Favorites.db";
 
     public FavoritesDbHelper(Context context) {

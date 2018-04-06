@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,10 +73,9 @@ public class FragNews extends Fragment {
     }
 
     public void loadData() {
-        new LoadData(Source.RUSSIA_TODAY).execute();
+        new LoadData(Source.NEWS_API).execute();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     class LoadData extends AsyncTask<Void, Void, ArrayList<News>> {
         private Source source;
         public LoadData(Source source) {
@@ -89,17 +89,17 @@ public class FragNews extends Fragment {
             try {
                 switch (source) {
                     case RBC:
-                        newsList.addAll(NewsParser.parseRBC());
+                        newsList = NewsParser.parseRBC();
                         break;
                     case RUSSIA_TODAY:
-                        newsList.addAll(NewsParser.parseRT());
+                        newsList = NewsParser.parseRT();
                         break;
                     case NEWS_API:
-                        newsList.addAll(NewsParser.parseNewsAPI());
+                        newsList = NewsParser.parseNewsAPI();
                         break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("LoadNews", e.getMessage());
             }
             return newsList;
         }
@@ -107,6 +107,8 @@ public class FragNews extends Fragment {
         @Override
         protected void onPostExecute(ArrayList<News> news) {
             super.onPostExecute(news);
+
+            Log.d("LoadNews", String.format("News amount : %s", news.size()));
 
             swipeRefreshLayout.setRefreshing(false);
             newsAdapter = new NewsAdapter(news);

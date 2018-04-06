@@ -96,6 +96,8 @@ public class NewsParser {
             for (int i = 0; i < articles.length(); i++) {
                 JSONObject news = articles.getJSONObject(i);
 
+                Log.d("Parsing", news.getString("title"));
+
                 list.add(new News(
                         news.getJSONObject("source").getString("id"),
                         news.getJSONObject("source").getString("name"),
