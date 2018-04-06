@@ -51,6 +51,7 @@ public class FragSettings extends Fragment {
                 SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(getActivity().getString(R.string.SETTINGS_DARK_THEME), b);
+                editor.commit();
             }
         });
 
