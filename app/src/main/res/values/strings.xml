@@ -8,4 +8,7 @@
     <string name="more">MORE</string>
     <string name="favorite">FAVORITE</string>
     <string name="title_activity_news_item">ActivityNewsItem</string>
+
+    <string name="settings_dark_theme">Dark theme</string>
+    <string name="SETTINGS_DARK_THEME">DARK_THEME</string>
 </resources>
