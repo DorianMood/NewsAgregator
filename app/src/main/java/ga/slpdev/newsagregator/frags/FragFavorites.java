@@ -84,7 +84,7 @@ public class FragFavorites extends Fragment {
         protected void onPostExecute(ArrayList<News> news) {
             super.onPostExecute(news);
 
-            favoritesAdapter = new FavoritesAdapter(news);
+            favoritesAdapter = new FavoritesAdapter(news, getContext());
             recyclerView.setAdapter(favoritesAdapter);
             favoritesRefresh.setRefreshing(false);
         }

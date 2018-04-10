@@ -1,5 +1,7 @@
 package ga.slpdev.newsagregator.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +19,11 @@ import ga.slpdev.newsagregator.utils.FavoritesDbHelper;
 public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<News> favoritesListNews;
     FavoritesDbHelper helper;
+    Context context;
 
-    public FavoritesAdapter(ArrayList<News> __list) {
+    public FavoritesAdapter(ArrayList<News> __list, Context __context) {
         this.favoritesListNews = __list;
+        this.context = __context;
     }
 
     @Override
@@ -46,12 +50,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private class FavoritesHolder extends RecyclerView.ViewHolder {
         private final TextView title;
         private final ImageView favorite;
+        private final ImageView share;
 
         public FavoritesHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.title);
             favorite = itemView.findViewById(R.id.favorite);
+            share = itemView.findViewById(R.id.share);
 
             favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,6 +71,17 @@ public class FavoritesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }
+            });
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, favoritesListNews.get(getAdapterPosition()).getUrl());
+                    shareIntent.setType("text/plain");
+                    context.startActivity(Intent.createChooser(shareIntent, "Share"));
                 }
             });
         }

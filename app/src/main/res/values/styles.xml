@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppThemeDark" parent="AppTheme" >
+        <item name="android:colorBackground">@color/cardview_dark_background</item>
+        <item name="android:textColorPrimary">?android:attr/textColorPrimaryInverse</item>
+    </style>
+
 </resources>

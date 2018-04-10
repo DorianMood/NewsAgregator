@@ -40,7 +40,7 @@ public class FragSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.frag_news, container, false);
+        rootView = inflater.inflate(R.layout.frag_settings, container, false);
 
         settingsDarkTheme = rootView.findViewById(R.id.settings_dark_theme);
 

@@ -1,6 +1,5 @@
 package ga.slpdev.newsagregator.activities;
 
-import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +11,7 @@ import android.view.MenuItem;
 import ga.slpdev.newsagregator.R;
 import ga.slpdev.newsagregator.frags.FragFavorites;
 import ga.slpdev.newsagregator.frags.FragNews;
+import ga.slpdev.newsagregator.frags.FragSettings;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
                     getFragNews();
                     return true;
                 case R.id.navigation_dashboard:
+                    getFragSettings();
                     return true;
                 case R.id.navigation_favorites:
                     getFragFavorites();
@@ -58,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.content, FragFavorites.getInstance());
         ft.commit();
     }
-
+    private void getFragSettings() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.content, FragSettings.getInstance());
+        ft.commit();
+    }
 }

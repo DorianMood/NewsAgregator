@@ -30,17 +30,22 @@ public class NewsParser {
         for (Element link : links) {
             String url = String.format("%s%s", RUSSIA_TODAY, link.attr("href"));
             doc = Jsoup.connect(url).get();
-            News item = new News("rt", "Russia Today", "", doc.title(),
-                    String.format("%s\n%s\n%s", doc.select(".article__heading").get(0).text(),
-                            doc.select(".article__summary").get(0).text(),
-                            doc.select(".article__text").get(0).text()),
-                    url,
-                    doc.select(".article__cover > img").size() != 0 ?
-                            doc.select(".article__cover > img").get(0).attr("src") :
-                            "https://cdn-st1.rtr-vesti.ru/p/xw_1092152.jpg",
-                    doc.select(".article__date > .date").get(0).text()
-            );
-            list.add(item);
+            Log.d("RUSSIA_TODAY", doc.title());
+            try {
+                News item = new News("rt", "Russia Today", "", doc.title(),
+                        String.format("%s\n%s\n%s", doc.select(".article__heading").get(0).text(),
+                                doc.select(".article__summary").get(0).text(),
+                                doc.select(".article__text").get(0).text()),
+                        url,
+                        doc.select(".article__cover > img").size() != 0 ?
+                                doc.select(".article__cover > img").get(0).attr("src") :
+                                "https://cdn-st1.rtr-vesti.ru/p/xw_1092152.jpg",
+                        doc.select(".article__date > .date").get(0).text()
+                );
+                list.add(item);
+            } catch(Exception e) {
+                Log.d("RUSSIA_TODAY", e.getMessage());
+            }
         }
         return list;
     }
@@ -78,7 +83,7 @@ public class NewsParser {
         return list;
     }
     public static ArrayList<News> parseNewsAPI() throws IOException {
-        String url = String.format("https://newsapi.org/v2/top-headlines?country=ru&amp;apiKey=%s",
+        String url = String.format("https://newsapi.org/v2/top-headlines?country=ru&apiKey=%s",
                 "0d5bac486d414684a532ea0ae31ef856");
 
         OkHttpClient client = new OkHttpClient();

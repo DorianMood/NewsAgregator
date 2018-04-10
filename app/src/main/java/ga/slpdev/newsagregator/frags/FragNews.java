@@ -73,7 +73,7 @@ public class FragNews extends Fragment {
     }
 
     public void loadData() {
-        new LoadData(Source.NEWS_API).execute();
+        new LoadData(Source.RUSSIA_TODAY).execute();
     }
 
     class LoadData extends AsyncTask<Void, Void, ArrayList<News>> {

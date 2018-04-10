@@ -3,12 +3,14 @@ package ga.slpdev.newsagregator.adapters;
 import android.content.Intent;
 import android.os.Bundle;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             more = itemView.findViewById(R.id.more);
             share = itemView.findViewById(R.id.share);
             favorite = itemView.findViewById(R.id.favorite);
+
+            ShareActionProvider shareActionProvider;
 
             // BEGIN: on more click
             more.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +105,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
             // END: on favorite click
+
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, newsObject.get(getAdapterPosition()).getUrl());
+                    shareIntent.setType("text/plain");
+                    context.startActivity(Intent.createChooser(shareIntent, "Share"));
+                }
+            });
         }
 
     }
