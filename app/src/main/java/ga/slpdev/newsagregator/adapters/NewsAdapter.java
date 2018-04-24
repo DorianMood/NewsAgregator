@@ -70,6 +70,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         b.putString("urlImage", newsObject.get(getAdapterPosition()).getUrlImage());
                         b.putString("url", newsObject.get(getAdapterPosition()).getUrl());
                         b.putString("description", newsObject.get(getAdapterPosition()).getDescription());
+                        // TODO: make it better then now.
+                        ArrayList<News> serializableList = new ArrayList<>();
+                        serializableList.add(newsObject.get(getAdapterPosition()));
+                        b.putSerializable("news", serializableList);
 
                         Intent intent = new Intent(context, NewsItemActivity.class);
                         intent.putExtra("bundle", b);
@@ -79,7 +83,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 }
             });
-            //END: on more click
+            // END: on more click
 
             // BEGIN:  on favorite click
             favorite.setOnClickListener(new View.OnClickListener() {
