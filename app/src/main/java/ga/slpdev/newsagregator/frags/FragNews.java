@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -113,6 +114,14 @@ public class FragNews extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
             newsAdapter = new NewsAdapter(news);
             recyclerView.setAdapter(newsAdapter);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (newsAdapter != null) {
+            newsAdapter.notifyItemChanged(newsAdapter.clicked);
         }
     }
 }

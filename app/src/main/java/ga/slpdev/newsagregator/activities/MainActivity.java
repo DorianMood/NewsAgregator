@@ -1,12 +1,18 @@
 package ga.slpdev.newsagregator.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import ga.slpdev.newsagregator.R;
 import ga.slpdev.newsagregator.frags.FragFavorites;
@@ -43,6 +49,18 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean dark = settings.getString("dark", "2").compareTo("1") == 0;
+
+
+        Log.d("MainActivityDark", "theme " + dark);
+        if (dark) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
 
         getFragNews();
     }

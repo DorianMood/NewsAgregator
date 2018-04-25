@@ -1,9 +1,12 @@
 package ga.slpdev.newsagregator.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,10 +47,10 @@ public class NewsItemActivity extends AppCompatActivity {
 
 
         arguments = getIntent().getBundleExtra("bundle");
-        final News newsObject = ((ArrayList<News>) arguments.getSerializable("news")).get(0);
-        url = arguments.getString("url");
-        urlImage = arguments.getString("urlImage");
-        text = arguments.getString("description");
+        final News newsObject = (News) arguments.getSerializable("news");
+        url = newsObject.getUrl();
+        urlImage = newsObject.getUrlImage();
+        text = newsObject.getDescription();
 
         description.setText(text);
         Glide.with(this).load(urlImage).thumbnail(0.5f).into(imagePreview);
@@ -89,6 +92,17 @@ public class NewsItemActivity extends AppCompatActivity {
             }
         });
         // END: on favorite click
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String dark = settings.getString("dark", "2");
+
+
+        Log.d("MainActivityDark", "theme " + dark);
+        if (dark.compareTo("1") == 0) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
     }
 
 }

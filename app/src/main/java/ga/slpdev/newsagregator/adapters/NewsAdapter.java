@@ -30,6 +30,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ArrayList<News> list;
     private static boolean[] liked;
     private static FavoritesDbHelper helper;
+    public static int clicked = 0;
 
     public NewsAdapter(ArrayList<News> list) {
         this.list = list;
@@ -66,14 +67,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         Toast.makeText(context, "" + getAdapterPosition(), Toast.LENGTH_SHORT).show();
 
                         Bundle b = new Bundle();
-
-                        b.putString("urlImage", newsObject.get(getAdapterPosition()).getUrlImage());
-                        b.putString("url", newsObject.get(getAdapterPosition()).getUrl());
-                        b.putString("description", newsObject.get(getAdapterPosition()).getDescription());
-                        // TODO: make it better then now.
-                        ArrayList<News> serializableList = new ArrayList<>();
-                        serializableList.add(newsObject.get(getAdapterPosition()));
-                        b.putSerializable("news", serializableList);
+                        b.putSerializable("news", newsObject.get(getAdapterPosition()));
+                        clicked = getAdapterPosition();
 
                         Intent intent = new Intent(context, NewsItemActivity.class);
                         intent.putExtra("bundle", b);
@@ -138,6 +133,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final News object = list.get(position);
+        Log.d("NewsAdapter", "binded");
         ((NewsHolder) holder).articlePreview.setText(object.getDescription());
         if (helper.isLiked(Crypto.Sha1(object.getDescription()))) {//liked[position]) {
             ((NewsHolder) holder).favorite.setImageResource(R.drawable.ic_favorite_black_24dp);

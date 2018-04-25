@@ -11,5 +11,9 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorText">#FFFFFF</color>
+    <color name="primary_material_dark">#212121</color>
+    <color name="foreground_material_dark">#ffffff</color>
+
+    <color name="colorMaterialDark">#FF303030</color>
 
 </resources>

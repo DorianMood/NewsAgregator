@@ -4,6 +4,7 @@ package ga.slpdev.newsagregator.frags;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,14 +45,18 @@ public class FragSettings extends Fragment {
 
         settingsDarkTheme = rootView.findViewById(R.id.settings_dark_theme);
 
+        final SharedPreferences settings = PreferenceManager
+                .getDefaultSharedPreferences(getActivity().getBaseContext());
+
+
+        settingsDarkTheme.setChecked(settings.getString("dark", "2").compareTo("2") != 0);
+
         settingsDarkTheme.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(getContext(), "isChecked", Toast.LENGTH_SHORT).show();
-                SharedPreferences settings = getActivity().getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean(getActivity().getString(R.string.SETTINGS_DARK_THEME), b);
-                editor.commit();
+                editor.putString("dark", settingsDarkTheme.isChecked() ? "1" : "2");
+                editor.apply();
             }
         });
 

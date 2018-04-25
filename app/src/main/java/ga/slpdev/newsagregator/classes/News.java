@@ -1,7 +1,9 @@
 package ga.slpdev.newsagregator.classes;
 
 
-public class News {
+import java.io.Serializable;
+
+public class News implements Serializable {
     private String sourceId;
     private String sourceName;
     private String author;
