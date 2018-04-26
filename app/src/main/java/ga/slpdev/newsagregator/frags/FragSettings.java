@@ -57,6 +57,7 @@ public class FragSettings extends Fragment {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString("dark", settingsDarkTheme.isChecked() ? "1" : "2");
                 editor.apply();
+                getContext().setTheme(settingsDarkTheme.isChecked() ? R.style.DarkTheme : R.style.AppTheme);
             }
         });
 
